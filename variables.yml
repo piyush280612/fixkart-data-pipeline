@@ -1,0 +1,14 @@
+# variables.yml
+variables:
+  catalog_name:
+    description: "The Unity Catalog name (e.g., 'main' for prod, 'dev' for testing)"
+    default: "main"
+  schema_name:
+    description: "The target schema/database"
+    default: "fixkart_prd"
+  source_system:
+    description: "Lineage identifier for the source system"
+    default: "fixkart_core_backend"
+  rbac_principal:
+    description: "The user group that receives SELECT permissions"
+    default: "account users"
