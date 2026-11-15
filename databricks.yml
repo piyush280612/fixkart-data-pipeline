@@ -20,7 +20,7 @@ targets:
   prod:
     workspace:
       # Replace with your actual Databricks workspace URL
-      host: https://<your-databricks-instance>.azuredatabricks.net
+      host: https://dbc-854ba7db-07ef.cloud.databricks.com
     resources:
       jobs:
         fixkart_etl_pipeline:
