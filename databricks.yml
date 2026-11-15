@@ -19,7 +19,6 @@ variables:
 targets:
   prod:
     workspace:
-      # Replace with your actual Databricks workspace URL
       host: https://dbc-854ba7db-07ef.cloud.databricks.com
     resources:
       jobs:
@@ -29,7 +28,7 @@ targets:
             - job_cluster_key: default_cluster
               new_cluster:
                 spark_version: "14.3.x-scala2.12"
-                node_type_id: "Standard_DS3_v2" # Adjust for AWS/GCP if not on Azure
+                node_type_id: "m5d.large" # Updated to an AWS instance type
                 num_workers: 2
           
           # Pass the bundle variables down to the notebook parameters
@@ -46,33 +45,33 @@ targets:
           tasks:
             - task_key: 00_generate_mock_data
               notebook_task:
-                notebook_path: ../src/00_mock_data_generator.ipynb
+                notebook_path: ./src/00_mock_data_generator.ipynb
               job_cluster_key: default_cluster
             
             - task_key: 01_ingest_bronze
               depends_on:
                 - task_key: 00_generate_mock_data
               notebook_task:
-                notebook_path: ../src/01_bronze_ingestion.ipynb
+                notebook_path: ./src/01_bronze_ingestion.ipynb
               job_cluster_key: default_cluster
 
             - task_key: 02_transform_silver
               depends_on:
                 - task_key: 01_ingest_bronze
               notebook_task:
-                notebook_path: ../src/02_silver_transform.ipynb
+                notebook_path: ./src/02_silver_transform.ipynb
               job_cluster_key: default_cluster
 
             - task_key: 03_aggregate_gold
               depends_on:
                 - task_key: 02_transform_silver
               notebook_task:
-                notebook_path: ../src/03_gold_aggregation.ipynb
+                notebook_path: ./src/03_gold_aggregation.ipynb
               job_cluster_key: default_cluster
               
             - task_key: 04_apply_governance
               depends_on:
                 - task_key: 03_aggregate_gold
               notebook_task:
-                notebook_path: ../src/04_apply_governance.ipynb
+                notebook_path: ./src/04_apply_governance.ipynb
               job_cluster_key: default_cluster
